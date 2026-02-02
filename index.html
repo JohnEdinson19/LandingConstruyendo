@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Carolina Agudelo - Construyendo Juntas. Únete a nuestra campaña por un futuro mejor.">
+    <meta name="keywords" content="Carolina Agudelo, Construyendo Juntas, campaña política">
+    <title>Carolina Agudelo - Construyendo Juntas</title>
+
+    <!-- Favicon - Agrega tu logo aquí -->
+    <link rel="icon" type="image/png" href="images/favicon.png?v=2">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google Fonts (opcional - puedes cambiar por las del manual) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Contenedor Principal -->
+    <div class="container">
+
+        <!-- Sección Superior: Foto de Perfil y Nombre -->
+        <header class="hero">
+            <div class="hero-image">
+                <img src="images/profile.png" alt="Carolina Agudelo en territorio">
+            </div>
+
+            <div class="hero-content">
+                <h1>Carolina Agudelo</h1>
+                <p class="hero-slogan">
+                    Administradora Pública y Mg. Estudios Sociales.<br>Alcaldesa Local de Kennedy
+                    (2020-2024)<br>👩🏼‍💼Candidata a la Cámara NL 109 🔴<br>¡Súmate y construyamos juntas! ✊🏻
+                </p>
+
+                <div class="hero-actions">
+                    <a href="https://api.whatsapp.com/send?phone=573132321458" class="primary-cta">
+                        Habla con el equipo
+                    </a>
+                    <a href="https://vaki.co/vaki/bogota-se-mueve-con-la-nl-109-carolina-agudelo-representante-a-la-camara-de-bogota"
+                        class="secondary-cta" target="_blank" rel="noopener noreferrer">
+                        ¡Apoya nuestra campaña en Vaki!
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sección de Enlaces/Botones -->
+        <main class="links-section">
+
+            <section class="sections-grid">
+
+                <article class="info-card">
+                    <h3>🎓 Perfil profesional</h3>
+                    <p>¡Conoce quién soy y por qué quiero trabajar para ti! 📄✊🏻</p>
+                    <a href="#" id="openCvModal">Conocer mi perfil →</a>
+                </article>
+
+                <article class="info-card">
+                    <h3>📄 Conoce mi Gestión y Propuestas NL 109</h3>
+                    <p>Las propuestas y acciones que impulsamos para mejorar la vida en Bogotá.</p>
+                    <a href="#" id="openPropuestas">Leer más →</a>
+                </article>
+
+                <!-- <article class="info-card">
+                    <h3>❤️ Voluntariado</h3>
+                    <p>Únete al equipo 109 👋❤️</p>
+                    <a href="#">Quiero participar →</a>
+                </article>
+
+                <article class="info-card">
+                    <h3>📍 Eventos</h3>
+                    <p>Encuentros ciudadanos y recorridos territoriales.</p>
+                    <a href="#">Ver agenda →</a>
+                </article> -->
+
+            </section>
+
+
+            <!-- SECCIÓN FORMULARIO GOOGLE FORMS -->
+            <!-- <div class="form-section" data-animate>
+                <h2 class="form-title">Regístrate y únete al movimiento</h2> -->
+
+                <!-- 
+                    INSTRUCCIONES PARA AGREGAR GOOGLE FORM:
+                    1. En tu Google Form, haz clic en "Enviar"
+                    2. Selecciona el ícono "<>" (Insertar HTML)
+                    3. Copia el código iframe
+                    4. Reemplaza el comentario de abajo con tu iframe
+                    
+                    Ejemplo:
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWhoIxQOD3BkHuJQA4dUE2C4zoe4N8JJyr7TIcmrygFJew7Q/viewform" 
+                            width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">
+                        Cargando…
+                    </iframe>
+                -->
+
+                <!-- PEGA AQUÍ TU IFRAME DE GOOGLE FORMS -->
+                <!-- <div class="form-placeholder">
+                    <p>📋 Agrega aquí tu Google Form</p>
+                    <p class="form-instruction">Reemplaza este div con el iframe de tu formulario</p>
+                </div> -->
+                <!-- FIN SECCIÓN GOOGLE FORMS -->
+            <!-- </div> -->
+
+        </main>
+        <div class="modal-overlay" id="modalPropuestas">
+            <div class="modal modal-background">
+
+                <button class="modal-close" id="closeModal">×</button>
+
+                <div class="modal-white-content">
+                    <img src="images/propuestas-afiche.webp" alt="Propuestas Carolina Agudelo" class="pdf-image">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="modalCv">
+            <div class="modal">
+
+                <button class="modal-close" id="closeCvModal">×</button>
+
+                <iframe src="docs/cv-carolina-agudelo.pdf" class="pdf-iframe" title="CV Carolina Agudelo">
+                </iframe>
+
+            </div>
+        </div>
+
+
+        <!-- Sección de Redes Sociales -->
+        <footer class="social-section">
+            <h3 class="social-title">Síguenos en redes sociales</h3>
+
+            <div class="social-links">
+                <!-- Facebook -->
+                <a href="#" target="_blank" class="social-icon" aria-label="Facebook">
+                    <img src="images/icons/facebook.svg" alt="Facebook">
+                </a>
+
+                <!-- Instagram -->
+                <a href="#" target="_blank" class="social-icon" aria-label="Instagram">
+                    <img src="images/icons/instagram.svg" alt="Instagram">
+                </a>
+
+                <!-- Twitter/X -->
+                <a href="#" target="_blank" class="social-icon" aria-label="Twitter">
+                    <img src="images/icons/twitter.svg" alt="Twitter">
+                </a>
+
+                <!-- TikTok -->
+                <a href="#" target="_blank" class="social-icon" aria-label="TikTok">
+                    <img src="images/icons/tiktok.svg" alt="TikTok">
+                </a>
+
+                <!-- YouTube -->
+                <a href="#" target="_blank" class="social-icon" aria-label="YouTube">
+                    <img src="images/icons/youtube.svg" alt="YouTube">
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="#" target="_blank" class="social-icon" aria-label="LinkedIn">
+                    <img src="images/icons/linkedin.svg" alt="LinkedIn">
+                </a>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/TU_NUMERO" target="_blank" class="social-icon" aria-label="WhatsApp">
+                    <img src="images/icons/whatsapp.svg" alt="WhatsApp">
+                </a>
+            </div>
+        </footer>
+
+        <!-- Créditos -->
+        <div class="credits">
+            <p>&copy; 2026 Carolina Agudelo - Construyendo Juntas</p>
+            <!-- <p class="slogan">¡Por Colombia, siempre adelante!</p> -->
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
