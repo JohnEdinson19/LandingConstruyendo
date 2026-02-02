@@ -196,3 +196,66 @@ if ('serviceWorker' in navigator) {
     });
 }
 */
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('openPropuestas');
+    const modal = document.getElementById('modalPropuestas');
+    const close = document.getElementById('closeModal');
+
+    if (!btn || !modal || !close) {
+        console.error('Modal: falta un elemento clave');
+        return;
+    }
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('active');
+    });
+
+    close.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('modalPropuestas');
+            if (modal && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            }
+        }
+    });
+
+    const openCvModal = document.getElementById('openCvModal');
+    const modalCv = document.getElementById('modalCv');
+    const closeCvModal = document.getElementById('closeCvModal');
+
+    openCvModal.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalCv.classList.add('active');
+    });
+
+    closeCvModal.addEventListener('click', () => {
+        modalCv.classList.remove('active');
+    });
+
+    // Cerrar con ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            modalCv.classList.remove('active');
+        }
+    });
+
+    // Click fuera
+    modalCv.addEventListener('click', (e) => {
+        if (e.target === modalCv) {
+            modalCv.classList.remove('active');
+        }
+    });
+
+
+});
