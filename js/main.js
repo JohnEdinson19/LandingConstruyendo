@@ -270,6 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const img = document.createElement('img');
         img.src = `${imageFolder}${i}.jpg`;
         img.alt = `Carolina en territorio ${i}`;
+        img.loading = "lazy";
         track.appendChild(img);
     }
 
