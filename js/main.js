@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         modalRC.classList.add('active');
         if (!rcFrame.src) {
-            rcFrame.src = "docs/cv-carolina-agudelo.pdf";
+            rcFrame.src = "docs/presentacion_publica_rendicion_de_cuentas_vigencia_2024.pdf";
         }
     });
 
