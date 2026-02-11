@@ -208,10 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const openCvModal = document.getElementById('openCvModal');
     const modalCv = document.getElementById('modalCv');
     const closeCvModal = document.getElementById('closeCvModal');
+    const cvFrame = document.getElementById("cvFrame");
 
     openCvModal.addEventListener('click', (e) => {
         e.preventDefault();
         modalCv.classList.add('active');
+        if (!cvFrame.src) {
+            cvFrame.src = "docs/cv-carolina-agudelo.pdf";
+        }
     });
 
     closeCvModal.addEventListener('click', () => {
@@ -228,10 +232,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const openRendicion = document.getElementById('openRendicion');
     const modalRC = document.getElementById('modalRC');
     const closeRCModal = document.getElementById('closeRCModal');
+    const rcFrame = document.getElementById("rcFrame");
 
     openRendicion.addEventListener('click', (e) => {
         e.preventDefault();
         modalRC.classList.add('active');
+        if (!rcFrame.src) {
+            rcFrame.src = "docs/cv-carolina-agudelo.pdf";
+        }
     });
 
     closeRCModal.addEventListener('click', () => {
@@ -243,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') {
             modalRC.classList.remove('active');
         }
-    });    
+    });
 
     // Click fuera
     modalRC.addEventListener('click', (e) => {

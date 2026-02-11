@@ -34,7 +34,6 @@ body {
     background-size: cover;          /* cubre toda la pantalla */
     background-position: center;     /* centrada */
     background-repeat: no-repeat;    /* no se repite */
-    background-attachment: fixed;    /* efecto elegante al hacer scroll */    
 }
 
 /* ================================
