@@ -390,7 +390,7 @@ button:focus-visible {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 24px;
-    margin: 60px 0;
+    margin: 5px 0;
 }
 
 .info-card {
