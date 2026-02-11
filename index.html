@@ -39,7 +39,7 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="https://api.whatsapp.com/send?phone=573132321458" class="primary-cta">
+                    <a href="https://api.whatsapp.com/send?phone=573132321458" class="secondary-cta">
                         Habla con el equipo
                     </a>
                     <a href="https://vaki.co/vaki/bogota-se-mueve-con-la-nl-109-carolina-agudelo-representante-a-la-camara-de-bogota"
@@ -67,6 +67,19 @@
                     <a href="#" id="openPropuestas">Leer más →</a>
                 </article>
 
+                <article class="info-card">
+                    <h3>📊 Rendición de cuentas 2020 – 2024</h3>
+                    <p>
+                        Consulta los informes y resultados de mi gestión como
+                        <strong>Alcaldesa Local de Kennedy</strong> durante el periodo
+                        <strong>2020 – 2024</strong>. La transparencia es un compromiso con la ciudadanía.
+                    </p>
+                    <a href="#" id="openRendicion">
+                        Consultar rendiciones de cuentas →
+                    </a>
+                </article>
+
+
                 <!-- <article class="info-card">
                     <h3>❤️ Voluntariado</h3>
                     <p>Únete al equipo 109 👋❤️</p>
@@ -81,12 +94,20 @@
 
             </section>
 
+            <!-- Carrusel de Fotos -->
+            <section class="carousel-section">
+                <div class="carousel">
+                    <button class="carousel-btn prev">‹</button>
+                    <div class="carousel-track" id="carouselTrack"></div>
+                    <button class="carousel-btn next">›</button>
+                </div>
+            </section>
 
             <!-- SECCIÓN FORMULARIO GOOGLE FORMS -->
             <!-- <div class="form-section" data-animate>
                 <h2 class="form-title">Regístrate y únete al movimiento</h2> -->
 
-                <!-- 
+            <!-- 
                     INSTRUCCIONES PARA AGREGAR GOOGLE FORM:
                     1. En tu Google Form, haz clic en "Enviar"
                     2. Selecciona el ícono "<>" (Insertar HTML)
@@ -100,12 +121,12 @@
                     </iframe>
                 -->
 
-                <!-- PEGA AQUÍ TU IFRAME DE GOOGLE FORMS -->
-                <!-- <div class="form-placeholder">
+            <!-- PEGA AQUÍ TU IFRAME DE GOOGLE FORMS -->
+            <!-- <div class="form-placeholder">
                     <p>📋 Agrega aquí tu Google Form</p>
                     <p class="form-instruction">Reemplaza este div con el iframe de tu formulario</p>
                 </div> -->
-                <!-- FIN SECCIÓN GOOGLE FORMS -->
+            <!-- FIN SECCIÓN GOOGLE FORMS -->
             <!-- </div> -->
 
         </main>
@@ -132,6 +153,17 @@
             </div>
         </div>
 
+        <div class="modal-overlay" id="modalRC">
+            <div class="modal">
+
+                <button class="modal-close" id="closeRCModal">×</button>
+
+                <iframe src="docs/presentacion_publica_rendicion_de_cuentas_vigencia_2024.pdf" class="pdf-iframe" title="presentacion_publica_rendicion_de_cuentas_vigencia_2024">
+                </iframe>
+
+            </div>
+        </div>        
+
 
         <!-- Sección de Redes Sociales -->
         <footer class="social-section">
@@ -139,12 +171,14 @@
 
             <div class="social-links">
                 <!-- Facebook -->
-                <a href="https://www.facebook.com/caro.agudeloh" target="_blank" class="social-icon" aria-label="Facebook">
+                <a href="https://www.facebook.com/caro.agudeloh" target="_blank" class="social-icon"
+                    aria-label="Facebook">
                     <img src="images/icons/facebook.svg" alt="Facebook">
                 </a>
 
                 <!-- Instagram -->
-                <a href="https://www.instagram.com/karokagudelo90" target="_blank" class="social-icon" aria-label="Instagram">
+                <a href="https://www.instagram.com/karokagudelo90" target="_blank" class="social-icon"
+                    aria-label="Instagram">
                     <img src="images/icons/instagram.svg" alt="Instagram">
                 </a>
 
@@ -169,7 +203,8 @@
                 </a> -->
 
                 <!-- WhatsApp -->
-                <a href="https://api.whatsapp.com/send?phone=573132321458" target="_blank" class="social-icon" aria-label="WhatsApp">
+                <a href="https://api.whatsapp.com/send?phone=573132321458" target="_blank" class="social-icon"
+                    aria-label="WhatsApp">
                     <img src="images/icons/whatsapp.svg" alt="WhatsApp">
                 </a>
             </div>

@@ -80,7 +80,7 @@ function checkBrokenLinks() {
     const links = document.querySelectorAll('a[href="#"]');
 
     if (links.length > 0) {
-        console.warn(`⚠️ Hay ${links.length} enlaces sin configurar (href="#"). Recuerda agregar las URLs correctas.`);
+        // console.warn(`⚠️ Hay ${links.length} enlaces sin configurar (href="#"). Recuerda agregar las URLs correctas.`);
     }
 }
 
@@ -93,11 +93,11 @@ function handleFormIframe() {
 
     iframes.forEach(iframe => {
         iframe.addEventListener('load', () => {
-            console.log('✅ Formulario de Google Forms cargado correctamente');
+            // console.log('✅ Formulario de Google Forms cargado correctamente');
         });
 
         iframe.addEventListener('error', () => {
-            console.error('❌ Error al cargar el formulario de Google Forms');
+            // console.error('❌ Error al cargar el formulario de Google Forms');
         });
     });
 }
@@ -160,7 +160,6 @@ function copyLinkToClipboard() {
 
 // Ejecutar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Carolina Agudelo - Construyendo Juntas');
 
     // Inicializar todas las funciones
     animateOnScroll();
@@ -173,30 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Parallax opcional (descomenta si lo quieres)
     // parallaxEffect();
 
-    console.log('✅ JavaScript inicializado correctamente');
-});
-
-// ================================
-// SERVICE WORKER PARA PWA (OPCIONAL)
-// ================================
-
-// Si quieres convertir esto en una PWA (Progressive Web App)
-// Descomenta el siguiente código:
-
-/*
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('✅ Service Worker registrado:', registration);
-            })
-            .catch(error => {
-                console.log('❌ Error al registrar Service Worker:', error);
-            });
-    });
-}
-*/
-document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('openPropuestas');
     const modal = document.getElementById('modalPropuestas');
     const close = document.getElementById('closeModal');
@@ -250,12 +225,159 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const openRendicion = document.getElementById('openRendicion');
+    const modalRC = document.getElementById('modalRC');
+    const closeRCModal = document.getElementById('closeRCModal');
+
+    openRendicion.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalRC.classList.add('active');
+    });
+
+    closeRCModal.addEventListener('click', () => {
+        modalRC.classList.remove('active');
+    });
+
+    // Cerrar con ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            modalRC.classList.remove('active');
+        }
+    });    
+
     // Click fuera
-    modalCv.addEventListener('click', (e) => {
-        if (e.target === modalCv) {
-            modalCv.classList.remove('active');
+    modalRC.addEventListener('click', (e) => {
+        if (e.target === modalRC) {
+            modalRC.classList.remove('active');
         }
     });
 
+    const imageFolder = 'images/carrusel/';
+    const totalImages = 20;
+
+    const track = document.getElementById('carouselTrack');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+
+    if (!track || !nextBtn || !prevBtn) return;
+
+    let currentIndex = 0;
+    let isAnimating = false;
+    let autoplay;
+
+    // 1️⃣ Crear imágenes dinámicamente
+    for (let i = 1; i <= totalImages; i++) {
+        const img = document.createElement('img');
+        img.src = `${imageFolder}${i}.jpg`;
+        img.alt = `Carolina en territorio ${i}`;
+        track.appendChild(img);
+    }
+
+    let slides = Array.from(track.children);
+    if (!slides.length) return;
+
+    // 2️⃣ Clonar la primera imagen (loop infinito)
+    const firstClone = slides[0].cloneNode(true);
+    track.appendChild(firstClone);
+
+    const totalSlides = slides.length + 1;
+
+    // 3️⃣ Movimiento principal
+    function updateCarousel(animate = true) {
+        if (isAnimating) return;
+
+        isAnimating = true;
+
+        const slideWidth = slides[0].getBoundingClientRect().width;
+
+        track.style.transition = animate
+            ? 'transform 0.5s ease'
+            : 'none';
+
+        track.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+
+        if (animate) {
+            setTimeout(() => {
+                isAnimating = false;
+            }, 500);
+        } else {
+            isAnimating = false;
+        }
+    }
+
+    // 4️⃣ Avanzar slide (única función de avance)
+    function nextSlide() {
+        if (isAnimating) return;
+
+        currentIndex++;
+        updateCarousel(true);
+
+        if (currentIndex === totalSlides - 1) {
+            setTimeout(() => {
+                currentIndex = 0;
+                updateCarousel(false);
+            }, 500);
+        }
+    }
+
+    // 5️⃣ Retroceder slide
+    function prevSlide() {
+        if (isAnimating) return;
+
+        if (currentIndex === 0) {
+            currentIndex = totalSlides - 2;
+            updateCarousel(false);
+        }
+
+        currentIndex--;
+        updateCarousel(true);
+    }
+
+    // 6️⃣ Autoplay controlado
+    function startAutoplay() {
+        autoplay = setInterval(nextSlide, 4000);
+    }
+
+    function resetAutoplay() {
+        clearInterval(autoplay);
+        startAutoplay();
+    }
+
+    // 7️⃣ Eventos
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetAutoplay();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetAutoplay();
+    });
+
+    // 8️⃣ Init
+    updateCarousel(false);
+    startAutoplay();
+
 
 });
+
+// ================================
+// SERVICE WORKER PARA PWA (OPCIONAL)
+// ================================
+
+// Si quieres convertir esto en una PWA (Progressive Web App)
+// Descomenta el siguiente código:
+
+/*
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('✅ Service Worker registrado:', registration);
+            })
+            .catch(error => {
+                console.log('❌ Error al registrar Service Worker:', error);
+            });
+    });
+}
+*/
