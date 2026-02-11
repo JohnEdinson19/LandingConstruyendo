@@ -225,10 +225,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const openRendicion = document.getElementById('openRendicion');
+    const modalRC = document.getElementById('modalRC');
+    const closeRCModal = document.getElementById('closeRCModal');
+
+    openRendicion.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalRC.classList.add('active');
+    });
+
+    closeRCModal.addEventListener('click', () => {
+        modalRC.classList.remove('active');
+    });
+
+    // Cerrar con ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            modalRC.classList.remove('active');
+        }
+    });    
+
     // Click fuera
-    modalCv.addEventListener('click', (e) => {
-        if (e.target === modalCv) {
-            modalCv.classList.remove('active');
+    modalRC.addEventListener('click', (e) => {
+        if (e.target === modalRC) {
+            modalRC.classList.remove('active');
         }
     });
 
