@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const imageFolder = 'images/carrusel/';
-    const totalImages = 20;
+    const totalImages = 33;
 
     const track = document.getElementById('carouselTrack');
     const nextBtn = document.querySelector('.carousel-btn.next');
