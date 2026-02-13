@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const imageFolder = 'images/carrusel/';
-    const totalImages = 33;
+    const totalImages = 34;
 
     const track = document.getElementById('carouselTrack');
     const nextBtn = document.querySelector('.carousel-btn.next');
@@ -275,11 +275,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1️⃣ Crear imágenes dinámicamente
     for (let i = 1; i <= totalImages; i++) {
-        const img = document.createElement('img');
-        img.src = `${imageFolder}${i}.jpg`;
-        img.alt = `Carolina en territorio ${i}`;
-        img.loading = "lazy";
-        track.appendChild(img);
+        if (i !== 3) {
+            const img = document.createElement('img');
+            img.src = `${imageFolder}${i}.jpg`;
+            img.alt = `Carolina en territorio ${i}`;
+            img.loading = "lazy";
+            track.appendChild(img);
+        }
     }
 
     let slides = Array.from(track.children);
