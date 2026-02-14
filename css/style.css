@@ -27,7 +27,7 @@
 body {
     font-family: var(--fuente-principal);
     color: var(--color-gris);
-    min-height: 100vh;
+    min-height: 90vh;
     padding: 20px;
     line-height: 1.6;
     background-image: url('../images/background.webp');
@@ -40,7 +40,7 @@ body {
    CONTENEDOR PRINCIPAL
    ================================ */
 .container {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 4rem auto;
     /* padding: 2.5rem 2rem; */
 
@@ -443,7 +443,7 @@ button:focus-visible {
 .hero-image {
     position: relative;
     width: 100%;
-    height: 517px;
+    height: 400px;
 }
 
 .hero-image img {
