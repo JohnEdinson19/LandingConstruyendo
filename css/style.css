@@ -30,7 +30,7 @@ body {
     min-height: 90vh;
     padding: 20px;
     line-height: 1.6;
-    background-image: url('../images/background.webp');
+    background-color: #8e1314;
     background-size: cover;          /* cubre toda la pantalla */
     background-position: center;     /* centrada */
     background-repeat: no-repeat;    /* no se repite */
