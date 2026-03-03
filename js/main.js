@@ -161,16 +161,12 @@ function copyLinkToClipboard() {
 // Ejecutar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Inicializar todas las funciones
     animateOnScroll();
     smoothScroll();
     detectMobile();
     checkBrokenLinks();
     handleFormIframe();
     trackLinkClicks();
-
-    // Parallax opcional (descomenta si lo quieres)
-    // parallaxEffect();
 
     const btn = document.getElementById('openPropuestas');
     const modal = document.getElementById('modalPropuestas');
@@ -260,6 +256,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    toggleVideoPlayback();
+    carruselAutoplay();
+
+});
+
+function carruselAutoplay() {
+    const section = document.getElementById('carrusel');
+    let initialized = false;
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !initialized) {
+            initCarousel();
+            initialized = true;
+            observer.disconnect();
+        }
+    }, {
+        root: null,
+        threshold: 0.1
+    });
+    if (section) {
+        observer.observe(section);
+    }
+}
+
+function toggleVideoPlayback() {
+    const video = document.getElementById('videoMarcar');
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => { });
+
+    video.addEventListener('click', function () {
+        if (video.ended) {
+            video.currentTime = 0;
+            video.play();
+            video.muted = false;
+            return;
+        }
+        if (video.paused) {
+            video.play();
+            video.muted = false;
+        } else {
+            video.pause();
+        }
+    });
+}
+
+function initCarousel() {
     const imageFolder = 'images/carrusel/';
     const totalImages = 34;
 
@@ -272,55 +314,67 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     let isAnimating = false;
     let autoplay;
+    let slideWidth;
 
-    // 1️⃣ Crear imágenes dinámicamente
     for (let i = 1; i <= totalImages; i++) {
         if (i !== 3) {
             const img = document.createElement('img');
-            img.src = `${imageFolder}${i}.jpg`;
+
+            img.dataset.src = `${imageFolder}${i}.webp`;
             img.alt = `Carolina en territorio ${i}`;
-            img.loading = "lazy";
+            img.loading = 'lazy';
+            img.decoding = 'async';
+
             track.appendChild(img);
         }
     }
 
-    let slides = Array.from(track.children);
+    const slides = Array.from(track.children);
     if (!slides.length) return;
 
-    // 2️⃣ Clonar la primera imagen (loop infinito)
+    function loadImage(index) {
+        if (index < 0 || index >= slides.length) return;
+        const img = slides[index];
+        if (!img) return;
+
+        if (!img.src) {
+            img.src = img.dataset.src;
+        }
+    }
+
+    loadImage(0);
+
     const firstClone = slides[0].cloneNode(true);
     track.appendChild(firstClone);
 
     const totalSlides = slides.length + 1;
 
-    // 3️⃣ Movimiento principal
+    function calculateWidth() {
+        slideWidth = slides[0].offsetWidth;
+    }
+
+    window.addEventListener('resize', calculateWidth);
+    calculateWidth();
+
     function updateCarousel(animate = true) {
         if (isAnimating) return;
 
         isAnimating = true;
 
-        const slideWidth = slides[0].getBoundingClientRect().width;
-
-        track.style.transition = animate
-            ? 'transform 0.5s ease'
-            : 'none';
-
+        track.style.transition = animate ? 'transform 0.5s ease' : 'none';
         track.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
 
-        if (animate) {
-            setTimeout(() => {
-                isAnimating = false;
-            }, 500);
-        } else {
+        setTimeout(() => {
             isAnimating = false;
-        }
+        }, 500);
     }
 
-    // 4️⃣ Avanzar slide (única función de avance)
     function nextSlide() {
         if (isAnimating) return;
 
         currentIndex++;
+        loadImage(currentIndex);
+        loadImage(currentIndex + 1);
         updateCarousel(true);
 
         if (currentIndex === totalSlides - 1) {
@@ -331,7 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 5️⃣ Retroceder slide
     function prevSlide() {
         if (isAnimating) return;
 
@@ -341,10 +394,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         currentIndex--;
+        loadImage(currentIndex);
+        loadImage(currentIndex - 1);
         updateCarousel(true);
     }
 
-    // 6️⃣ Autoplay controlado
     function startAutoplay() {
         autoplay = setInterval(nextSlide, 4000);
     }
@@ -354,7 +408,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startAutoplay();
     }
 
-    // 7️⃣ Eventos
     nextBtn.addEventListener('click', () => {
         nextSlide();
         resetAutoplay();
@@ -365,30 +418,5 @@ document.addEventListener('DOMContentLoaded', () => {
         resetAutoplay();
     });
 
-    // 8️⃣ Init
     updateCarousel(false);
-    startAutoplay();
-
-
-});
-
-// ================================
-// SERVICE WORKER PARA PWA (OPCIONAL)
-// ================================
-
-// Si quieres convertir esto en una PWA (Progressive Web App)
-// Descomenta el siguiente código:
-
-/*
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('✅ Service Worker registrado:', registration);
-            })
-            .catch(error => {
-                console.log('❌ Error al registrar Service Worker:', error);
-            });
-    });
 }
-*/
