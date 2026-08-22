@@ -417,7 +417,6 @@ document.addEventListener('DOMContentLoaded', () => {
     handleFormIframe();
     trackLinkClicks();
 
-<<<<<<< HEAD
     // Tracking y formularios dinámicos
     trackVisit();
     cargarFormularios();
@@ -425,8 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Parallax opcional (descomenta si lo quieres)
     // parallaxEffect();
 
-=======
->>>>>>> e8993759dbff0422a98f1b9a488fc6ae1cef493b
     const btn = document.getElementById('openPropuestas');
     const modal = document.getElementById('modalPropuestas');
     const close = document.getElementById('closeModal');
