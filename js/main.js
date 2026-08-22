@@ -1,4 +1,253 @@
 // ================================
+// CONFIGURACIÓN DEL BACKEND
+// ================================
+
+const API_URL = "https://apicarofastapi.onrender.com"; // Cambiar por URL
+const ENCRYPTED_KEY = "gAAAAABqihyZKDETHWyT0E_vZ6rZ4pWg-k0TXWLKn8rClLoMkEoee0ebFuWAQHw3i-SBwM2kzDETY05kR3bAR5cvRd_X1umxfl6hLVnyh3LFy5arW4hgES8="; // Generar
+
+// ================================
+// GEOLOCALIZACIÓN
+// ================================
+
+async function tryBrowserGPS() {
+    return new Promise((resolve) => {
+        if (!("geolocation" in navigator)) return resolve(null);
+
+        navigator.geolocation.getCurrentPosition(
+            (pos) =>
+                resolve({
+                    lat: pos.coords.latitude.toFixed(6),
+                    lon: pos.coords.longitude.toFixed(6),
+                }),
+            () => resolve(null),
+            { timeout: 5000, enableHighAccuracy: true }
+        );
+    });
+}
+
+async function reverseGeocode(lat, lon) {
+    try {
+        const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=es`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return {
+            barrio: data.locality || data.sublocality || "",
+            ciudad: data.city || "",
+            pais: data.countryName || "",
+        };
+    } catch {
+        return { barrio: "", ciudad: "", pais: "" };
+    }
+}
+
+async function ipGeolocation() {
+    try {
+        const response = await fetch("https://ipapi.co/json/");
+        const data = await response.json();
+        return {
+            lat: String(data.latitude || ""),
+            lon: String(data.longitude || ""),
+            ciudad: data.city || "",
+            pais: data.country_name || "",
+            barrio: "",
+        };
+    } catch {
+        return { lat: "", lon: "", ciudad: "", pais: "", barrio: "" };
+    }
+}
+
+async function getGeolocation() {
+    const gps = await tryBrowserGPS();
+
+    if (gps) {
+        const address = await reverseGeocode(gps.lat, gps.lon);
+        return { ...gps, ...address };
+    }
+
+    return await ipGeolocation();
+}
+
+function getDeviceInfo() {
+    const ua = navigator.userAgent;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+
+    let navegador = "Otro";
+    if (ua.includes("Chrome") && !ua.includes("Edg")) navegador = "Chrome";
+    else if (ua.includes("Safari") && !ua.includes("Chrome")) navegador = "Safari";
+    else if (ua.includes("Firefox")) navegador = "Firefox";
+    else if (ua.includes("Edg")) navegador = "Edge";
+
+    return {
+        navegador,
+        dispositivo: isMobile ? "Móvil" : "Desktop",
+    };
+}
+
+// ================================
+// API - FORMULARIOS DINÁMICOS (CARDS + MODALES)
+// ================================
+
+async function cargarFormularios() {
+    const container = document.getElementById("formularios-container");
+    if (!container) return;
+
+    const section = container.closest(".form-section");
+    section?.classList.add("is-hidden");
+
+    try {
+        const response = await fetch(`${API_URL}/api/formularios`, {
+            headers: { "X-API-Key": ENCRYPTED_KEY },
+        });
+
+        if (!response.ok) throw new Error("Error al cargar formularios");
+
+        const data = await response.json();
+
+        if (!data.formularios || data.formularios.length === 0) {
+            return;
+        }
+
+        renderizarFormularios(data.formularios, container);
+        section?.classList.remove("is-hidden");
+    } catch (error) {
+        console.error("Error cargando formularios:", error);
+    }
+}
+
+function renderizarFormularios(formularios, container) {
+    const grid = document.createElement("div");
+    grid.className = "campaigns-grid";
+
+    formularios.forEach((form) => {
+        const card = document.createElement("button");
+        card.className = "campaign-card";
+        card.dataset.modal = `modal-${form.nombre}`;
+        card.innerHTML = `
+            <span class="campaign-icon">${form.icono}</span>
+            <span class="campaign-title">${form.titulo}</span>
+            <span class="campaign-desc">${form.descripcion}</span>
+        `;
+
+        const modal = document.createElement("div");
+        modal.className = "modal-overlay";
+        modal.id = `modal-${form.nombre}`;
+
+        const fieldsHtml = form.headers
+            .filter((h) => h !== "fecha" && h !== "hora")
+            .map((h) => `
+                <div class="form-group">
+                    <label for="${form.nombre}-${h}">${h.charAt(0).toUpperCase() + h.slice(1)}</label>
+                    <input type="${getFieldType(h)}" name="${h}" id="${form.nombre}-${h}" placeholder="${h.charAt(0).toUpperCase() + h.slice(1)}" required>
+                </div>
+            `)
+            .join("");
+
+        modal.innerHTML = `
+            <div class="modal modal-form">
+                <button class="modal-close" data-close-modal="modal-${form.nombre}">×</button>
+                <h3 class="modal-form-title">${form.titulo}</h3>
+                <p class="modal-form-desc">${form.descripcion}</p>
+                <form data-hoja="${form.nombre}">
+                    ${fieldsHtml}
+                    <button type="submit" class="form-submit">Enviar</button>
+                </form>
+            </div>
+        `;
+
+        grid.appendChild(card);
+        container.appendChild(modal);
+
+        card.addEventListener("click", () => modal.classList.add("active"));
+
+        modal.querySelector("[data-close-modal]").addEventListener("click", () => {
+            modal.classList.remove("active");
+        });
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) modal.classList.remove("active");
+        });
+
+        modal.querySelector("form").addEventListener("submit", handleFormSubmit);
+    });
+
+    container.appendChild(grid);
+}
+
+function getFieldType(header) {
+    const lower = header.toLowerCase();
+    if (lower.includes("email") || lower.includes("correo")) return "email";
+    if (lower.includes("tel") || lower.includes("celular") || lower.includes("fono")) return "tel";
+    if (lower.includes("url") || lower.includes("enlace")) return "url";
+    return "text";
+}
+
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const hoja = form.dataset.hoja;
+    const button = form.querySelector(".form-submit");
+
+    button.disabled = true;
+    button.textContent = "Enviando...";
+
+    try {
+        const datos = {};
+        form.querySelectorAll("input").forEach((input) => {
+            datos[input.name] = input.value;
+        });
+
+        const response = await fetch(`${API_URL}/api/escribir`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-API-Key": ENCRYPTED_KEY,
+            },
+            body: JSON.stringify({ hoja, datos }),
+        });
+
+        if (!response.ok) throw new Error("Error al enviar");
+
+        form.reset();
+        form.closest(".modal-overlay")?.classList.remove("active");
+        button.textContent = "Enviar";
+    } catch (error) {
+        console.error("Error enviando formulario:", error);
+        button.textContent = "Error. Intenta de nuevo";
+        setTimeout(() => {
+            button.textContent = "Enviar";
+        }, 3000);
+    } finally {
+        button.disabled = false;
+    }
+}
+
+// ================================
+// API - TRACKING DE VISITAS
+// ================================
+
+async function trackVisit() {
+    try {
+        const geo = await getGeolocation();
+        const device = getDeviceInfo();
+
+        await fetch(`${API_URL}/api/track`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-API-Key": ENCRYPTED_KEY,
+            },
+            body: JSON.stringify({
+                ...geo,
+                ...device,
+                fuente: document.referrer || "directo",
+            }),
+        });
+    } catch (error) {
+        console.error("Error tracking:", error);
+    }
+}
+
+// ================================
 // ANIMACIONES DE ENTRADA
 // ================================
 
@@ -168,6 +417,10 @@ document.addEventListener('DOMContentLoaded', () => {
     checkBrokenLinks();
     handleFormIframe();
     trackLinkClicks();
+
+    // Tracking y formularios dinámicos
+    trackVisit();
+    cargarFormularios();
 
     // Parallax opcional (descomenta si lo quieres)
     // parallaxEffect();
