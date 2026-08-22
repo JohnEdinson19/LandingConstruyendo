@@ -45,6 +45,7 @@ async function ipGeolocation() {
         const response = await fetch("https://ipapi.co/json/");
         const data = await response.json();
         return {
+            ip: data.ip || "",
             lat: String(data.latitude || ""),
             lon: String(data.longitude || ""),
             ciudad: data.city || "",
@@ -52,7 +53,7 @@ async function ipGeolocation() {
             barrio: "",
         };
     } catch {
-        return { lat: "", lon: "", ciudad: "", pais: "", barrio: "" };
+        return { ip: "", lat: "", lon: "", ciudad: "", pais: "", barrio: "" };
     }
 }
 
