@@ -120,31 +120,12 @@
                 </div>
             </section>
 
-            <!-- SECCIÓN FORMULARIO GOOGLE FORMS -->
-            <!-- <div class="form-section" data-animate>
-                <h2 class="form-title">Regístrate y únete al movimiento</h2> -->
-
-            <!-- 
-                    INSTRUCCIONES PARA AGREGAR GOOGLE FORM:
-                    1. En tu Google Form, haz clic en "Enviar"
-                    2. Selecciona el ícono "<>" (Insertar HTML)
-                    3. Copia el código iframe
-                    4. Reemplaza el comentario de abajo con tu iframe
-                    
-                    Ejemplo:
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWhoIxQOD3BkHuJQA4dUE2C4zoe4N8JJyr7TIcmrygFJew7Q/viewform" 
-                            width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">
-                        Cargando…
-                    </iframe>
-                -->
-
-            <!-- PEGA AQUÍ TU IFRAME DE GOOGLE FORMS -->
-            <!-- <div class="form-placeholder">
-                    <p>📋 Agrega aquí tu Google Form</p>
-                    <p class="form-instruction">Reemplaza este div con el iframe de tu formulario</p>
-                </div> -->
-            <!-- FIN SECCIÓN GOOGLE FORMS -->
-            <!-- </div> -->
+            <!-- SECCIÓN FORMULARIOS DINÁMICOS -->
+            <section class="form-section" data-animate>
+                <h2 class="form-title">Regístrate y únete al movimiento</h2>
+                <div id="formularios-container"></div>
+            </section>
+            <!-- FIN SECCIÓN FORMULARIOS DINÁMICOS -->
 
         </main>
         <div class="modal-overlay" id="modalPropuestas">
@@ -235,6 +216,9 @@
         </div>
 
     </div>
+
+    <!-- CryptoJS para encriptación de API Key -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
