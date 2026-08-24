@@ -425,38 +425,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // Parallax opcional (descomenta si lo quieres)
     // parallaxEffect();
 
-    const btn = document.getElementById('openPropuestas');
-    const modal = document.getElementById('modalPropuestas');
-    const close = document.getElementById('closeModal');
+    // const btn = document.getElementById('openPropuestas');
+    // const modal = document.getElementById('modalPropuestas');
+    // const close = document.getElementById('closeModal');
 
-    if (!btn || !modal || !close) {
-        console.error('Modal: falta un elemento clave');
-        return;
-    }
+    // if (!btn || !modal || !close) {
+    //     console.error('Modal: falta un elemento clave');
+    //     return;
+    // }
 
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        modal.classList.add('active');
-    });
+    // btn.addEventListener('click', (e) => {
+    //     e.preventDefault();
+    //     modal.classList.add('active');
+    // });
 
-    close.addEventListener('click', () => {
-        modal.classList.remove('active');
-    });
+    // close.addEventListener('click', () => {
+    //     modal.classList.remove('active');
+    // });
 
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-        }
-    });
+    // modal.addEventListener('click', (e) => {
+    //     if (e.target === modal) {
+    //         modal.classList.remove('active');
+    //     }
+    // });
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            const modal = document.getElementById('modalPropuestas');
-            if (modal && modal.classList.contains('active')) {
-                modal.classList.remove('active');
-            }
-        }
-    });
+    // document.addEventListener('keydown', (e) => {
+    //     if (e.key === 'Escape') {
+    //         const modal = document.getElementById('modalPropuestas');
+    //         if (modal && modal.classList.contains('active')) {
+    //             modal.classList.remove('active');
+    //         }
+    //     }
+    // });
 
     const openCvModal = document.getElementById('openCvModal');
     const modalCv = document.getElementById('modalCv');
